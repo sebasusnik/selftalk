@@ -14,6 +14,7 @@ export default function IndexPage() {
             className="xs:w-4/5"
             width={450}
             height={298}
+            priority
             />
         </div>
         <div className="flex max-w-[64rem] flex-col items-center gap-4 px-4 text-center md:container sm:gap-5 2xl:gap-6">
@@ -32,7 +33,7 @@ export default function IndexPage() {
             Saber más
           </Link>
           <Link
-            href={'/login'}
+            href={'/signin'}
             className={buttonVariants({ size: "lg" })}
           >
             Empezar

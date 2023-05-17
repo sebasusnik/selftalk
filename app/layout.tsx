@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Provider } from "@/components/provider"
 
 export const metadata: Metadata = {
   title: {
@@ -35,14 +35,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased selection:bg-accent selection:text-black",
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
+          <Provider>
+            {children}
             <TailwindIndicator />
-          </ThemeProvider>
+          </Provider>
         </body>
       </html>
     </>

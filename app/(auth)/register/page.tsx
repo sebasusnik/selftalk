@@ -9,7 +9,7 @@ interface Props {}
 
 const Page: React.FC<Props> = () => {
   return (
-    <div className="container absolute inset-0 flex w-screen flex-col items-center justify-center">
+    <div className="container flex h-[calc(100dvh)] w-screen flex-col items-center justify-center">
     <Link
       href="/"
       className={cn(
@@ -36,7 +36,7 @@ const Page: React.FC<Props> = () => {
       <p className="px-8 text-center text-sm text-muted-foreground">
         <Link
           href="/login"
-          className="hover:text-brand underline underline-offset-4"
+          className="underline underline-offset-4 hover:text-muted-foreground"
         >
           Ya tienes una cuenta? Haz click aquí
         </Link>

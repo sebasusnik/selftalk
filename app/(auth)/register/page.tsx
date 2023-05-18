@@ -32,7 +32,7 @@ const Page: React.FC<Props> = () => {
           Creá tu cuenta para empezar, puedes ingresar tu nombre y mail, o acceder con Google
         </p>
       </div>
-      <UserAuthForm register />
+      <UserAuthForm/>
       <p className="px-8 text-center text-sm text-muted-foreground">
         <Link
           href="/login"

@@ -27,16 +27,16 @@ export default function IndexPage() {
           </p>
         <div className="mt-2 flex gap-4">
           <Link
-            href={'/'}
-            className={buttonVariants({ variant: "outline", size: "lg" })}
-          >
-            Saber más
-          </Link>
-          <Link
             href={'/signin'}
             className={buttonVariants({ size: "lg" })}
           >
             Empezar
+          </Link>
+          <Link
+            href={'/'}
+            className={buttonVariants({ variant: "outline", size: "lg" })}
+          >
+            Saber más
           </Link>
         </div>
       </div>

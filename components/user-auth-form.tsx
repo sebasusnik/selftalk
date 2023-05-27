@@ -2,10 +2,10 @@
 
 import * as React from "react"
 import { useSearchParams } from "next/navigation"
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
@@ -14,9 +14,11 @@ import { Icons } from "@/components/icons"
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const {data: session} = useSession()
+  console.log(session)
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams?.get('callbackUrl')
+/*   const searchParams = useSearchParams()
+  const callbackUrl = searchParams?.get('callbackUrl') */
 
   return (
     <div className={cn("grid gap-4", className)} {...props}>
@@ -36,9 +38,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
             />
           </div>
-          <button className={cn(buttonVariants())}>
+          <Button>
             Accedé con tu e-mail
-          </button>
+          </Button>
         </div>
       </form>
       <div className="relative">
@@ -51,15 +53,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <button
+      <Button
         type="button"
-        className={cn("flex gap-3", buttonVariants({ variant: "outline" }), " hover:bg-blue-100")}
-        onClick={() => {signIn("google"), { callbackUrl }}}
+        variant={"outline"}
+        className={"flex gap-3 hover:bg-blue-100"}
+        onClick={() => {signIn("google", { callbackUrl: "/profile"})}}
         disabled={isLoading}
       >
         <Icons.google className="relative h-5 w-5" />
         <span>Google</span>
-      </button>
+      </Button>
     </div>
   )
 }

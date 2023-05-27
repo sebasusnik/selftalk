@@ -12,9 +12,9 @@ export function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Link
             href={'/signin'}
-            className={buttonVariants()}
+            className={buttonVariants({variant:"secondary"})}
           >
-            Logueate
+            Ingresá
           </Link>
         </div>
       </div>

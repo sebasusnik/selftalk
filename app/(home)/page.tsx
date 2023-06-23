@@ -12,8 +12,8 @@ export default function IndexPage() {
         <div className="flex max-w-[64rem] flex-col items-center px-12 md:container">
           <Image src={abcimage} alt="Ilustración sobre salud mental"
             className="xs:w-4/5"
-            width={450}
-            height={298}
+            width={400}
+            height={264}
             priority
             />
         </div>

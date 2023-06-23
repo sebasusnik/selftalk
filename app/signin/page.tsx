@@ -24,7 +24,7 @@ const Page: React.FC<Props> = () => {
     </Link>
     <div className="mx-auto flex w-full flex-col justify-center space-y-4 sm:w-[350px]">
       <div className="flex flex-col space-y-2 text-center">
-        {/* <span className="mx-auto h-6 w-6">&#129504;</span> */}
+    {/* <span className="mx-auto h-6 w-6">&#129504;</span> */}
         <h1 className="text-2xl font-semibold tracking-tight">
           Hola!
         </h1>
@@ -34,12 +34,12 @@ const Page: React.FC<Props> = () => {
       </div>
       <UserAuthForm />
       <p className="px-8 text-center text-sm text-muted-foreground">
-        <Link
+    {/* <Link
           href="/register"
           className="underline underline-offset-4 hover:text-muted-foreground"
         >
           No tenés una cuenta? Registrate
-        </Link>
+        </Link> */}
       </p>
     </div>
   </div>

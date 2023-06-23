@@ -6,6 +6,7 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { Provider } from "@/components/provider"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: {
@@ -24,18 +25,14 @@ export const metadata: Metadata = {
   },
 }
 
-interface RootLayoutProps {
-  children: React.ReactNode
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased selection:bg-accent selection:text-black",
+            "min-h-screen bg-background font-sans antialiased selection:bg-accent selection:text-black ",
             fontSans.variable
           )}
         >
@@ -43,6 +40,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             {children}
             <TailwindIndicator />
           </Provider>
+          <Toaster />
         </body>
       </html>
     </>

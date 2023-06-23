@@ -8,6 +8,10 @@ import { notFound } from "next/navigation"
 export default async function HomeLayout({ children }) {
   const user = await getCurrentUser()
 
+  if (!user) {
+    return notFound()
+  }
+
   return (
     <>
             <div className="relative flex min-h-screen flex-col">

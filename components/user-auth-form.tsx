@@ -2,9 +2,13 @@
 
 import * as React from "react"
 import { useSearchParams } from "next/navigation"
-import { signIn, useSession } from 'next-auth/react'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from 'next-auth/react'
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 import { cn } from "@/lib/utils"
+import { userAuthSchema } from "@/lib/validations/auth"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,16 +17,51 @@ import { Icons } from "@/components/icons"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+type FormData = z.infer<typeof userAuthSchema>
+
+
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const {data: session} = useSession()
-  console.log(session)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(userAuthSchema),
+  })
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-/*   const searchParams = useSearchParams()
-  const callbackUrl = searchParams?.get('callbackUrl') */
+  const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
+
+  const searchParams = useSearchParams()
+
+  async function onSubmit(data: FormData) {
+    setIsLoading(true)
+    console.log(data)
+    const signInResult = await signIn("email", {
+      email: data.email.toLowerCase(),
+      redirect: false,
+      callbackUrl: searchParams?.get("from") || "/profile",
+    })
+
+    setIsLoading(false)
+
+    if (!signInResult?.ok) {
+      return toast({
+        title: "Algo salió mal. :(",
+        description: "Su solicitud de inicio de sesión falló. Por favor inténtalo de nuevo.",
+        variant: "destructive",
+      })
+    }
+
+    return toast({
+      title: "Chequeá tu correo",
+      description: "Te enviamos un enlace para iniciar sesión. Asegurate también de revisar en tu correo no deseado.",
+    })
+  }
 
   return (
     <div className={cn("grid gap-4", className)} {...props}>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-6">
           <div className="grid gap-3">
             <Label className="mt-2" htmlFor="email">
@@ -31,16 +70,25 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Input
               id="email"
               placeholder="tuemail@ejemplo.com"
-              type="email"
+              type="text"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isLoading || isGoogleLoading}
+              {...register("email")}
             />
           </div>
-          <Button>
+          {errors?.email && (
+              <p className="m-0 ml-auto mt-[-16px] px-1 text-xs text-red-600">
+                {errors.email.message}
+              </p>
+            )}
+          <button className={cn(buttonVariants())} disabled={isLoading || isGoogleLoading}>
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}{" "}
             Accedé con tu e-mail
-          </Button>
+          </button>
         </div>
       </form>
       <div className="relative">
@@ -56,11 +104,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       <Button
         type="button"
         variant={"outline"}
-        className={"flex gap-3 hover:bg-blue-100"}
-        onClick={() => {signIn("google", { callbackUrl: "/profile"})}}
-        disabled={isLoading}
+        className={"flex gap-3 hover:bg-blue-100 disabled:bg-blue-100 disabled:text-blue-900"}
+        onClick={() => {
+          setIsGoogleLoading(true)
+          signIn("google")
+        }}
+        disabled={isLoading || isGoogleLoading}
       >
-        <Icons.google className="relative h-5 w-5" />
+        {isGoogleLoading ? (
+          <Icons.spinner className="mr-1 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.google className="relative h-5 w-5" />
+        )}
         <span>Google</span>
       </Button>
     </div>

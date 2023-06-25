@@ -22,7 +22,7 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export function UserMenu({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost" }), "focus-ring text-md flex gap-2 rounded-full px-1 md:px-0 md:pr-3")}>
+      <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost" }), "focus-ring text-md flex gap-2 rounded-full px-0 md:pr-3")}>
         <UserAvatar
           user={{ name: user?.name || null, image: user?.image || null }}
         />

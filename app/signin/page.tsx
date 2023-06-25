@@ -9,7 +9,7 @@ interface Props {}
 
 const Page: React.FC<Props> = () => {
   return (
-    <div className="container absolute inset-0 flex w-screen flex-col items-center justify-center">
+  <div className="container absolute inset-0 flex w-screen flex-col items-center justify-center">
     <Link
       href="/"
       className={cn(
